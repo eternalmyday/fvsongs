@@ -3,10 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>Favorite Songs</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -29,7 +32,9 @@ body{
   box-shadow:0 3px 14px rgba(0,0,0,.025);
 }
 
-.card+.card{margin-top:12px}
+.card + .card{
+  margin-top:12px;
+}
 
 .head{
   display:flex;
@@ -72,16 +77,16 @@ h2{
 
 .person{
   min-width:0;
-  padding:10px;
-  background:#fff;
   border:1px solid #eeeeef;
   border-radius:11px;
+  padding:10px;
+  background:#fff;
 }
 
 .person-title{
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   margin-bottom:7px;
   font-size:12px;
   font-weight:700;
@@ -103,25 +108,25 @@ h2{
 .cover{
   width:30px;
   height:30px;
-  flex:0 0 auto;
-  object-fit:cover;
-  background:#ececec;
   border-radius:5px;
+  object-fit:cover;
+  flex:0 0 auto;
+  background:#ececec;
 }
 
 .song-text{
   min-width:0;
   flex:1;
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
   font-size:11px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .empty{
-  padding:9px 0;
-  color:#a0a3a8;
   font-size:11px;
+  color:#a0a3a8;
+  padding:9px 0;
 }
 
 .filters{
@@ -160,9 +165,9 @@ h2{
 }
 
 .who{
-  padding:3px 5px;
-  background:#f0f1f3;
   border-radius:5px;
+  background:#f0f1f3;
+  padding:3px 5px;
   white-space:nowrap;
   font-size:10.5px;
   font-weight:700;
@@ -184,11 +189,11 @@ h2{
 .overlay{
   position:fixed;
   inset:0;
-  z-index:20;
+  background:rgba(0,0,0,.34);
   display:none;
   align-items:flex-end;
   justify-content:center;
-  background:rgba(0,0,0,.34);
+  z-index:20;
 }
 
 .overlay.open{
@@ -198,10 +203,10 @@ h2{
 .sheet{
   width:min(720px,100%);
   max-height:78vh;
-  overflow:auto;
-  padding:14px;
   background:#fff;
   border-radius:18px 18px 0 0;
+  padding:14px;
+  overflow:auto;
 }
 
 .sheet-top{
@@ -213,17 +218,11 @@ h2{
 
 .search{
   width:100%;
-  padding:10px 11px;
   border:1px solid #dedfe3;
   border-radius:10px;
-  outline:none;
+  padding:10px 11px;
   font-size:13px;
-}
-
-.hint{
-  margin:8px 1px;
-  color:#999;
-  font-size:10px;
+  outline:none;
 }
 
 .result{
@@ -250,19 +249,25 @@ h2{
 }
 
 .result-title{
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
   font-size:12px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .result-sub{
   margin-top:2px;
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
-  color:#888;
   font-size:10px;
+  color:#888;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.hint{
+  font-size:10px;
+  color:#999;
+  margin:8px 1px;
 }
 
 @media(max-width:460px){
@@ -324,7 +329,9 @@ h2{
 
         <div class="person-title">
           <span>나</span>
-          <button class="btn" onclick="openSearch('나')">+ 등록</button>
+          <button class="btn" onclick="openSearch('나')">
+            + 등록
+          </button>
         </div>
 
         <div id="mySongs"></div>
@@ -335,7 +342,9 @@ h2{
 
         <div class="person-title">
           <span>친구</span>
-          <button class="btn" onclick="openSearch('친구')">+ 등록</button>
+          <button class="btn" onclick="openSearch('친구')">
+            + 등록
+          </button>
         </div>
 
         <div id="friendSongs"></div>
@@ -356,15 +365,24 @@ h2{
 
     <div class="filters">
 
-      <button class="filter on" onclick="setFilter('전체',this)">
+      <button
+        class="filter on"
+        onclick="setFilter('전체',this)"
+      >
         전체
       </button>
 
-      <button class="filter" onclick="setFilter('나',this)">
+      <button
+        class="filter"
+        onclick="setFilter('나',this)"
+      >
         나
       </button>
 
-      <button class="filter" onclick="setFilter('친구',this)">
+      <button
+        class="filter"
+        onclick="setFilter('친구',this)"
+      >
         친구
       </button>
 
@@ -377,7 +395,11 @@ h2{
 </div>
 
 
-<div id="overlay" class="overlay" onclick="overlayClose(event)">
+<div
+  id="overlay"
+  class="overlay"
+  onclick="overlayClose(event)"
+>
 
   <div class="sheet">
 
@@ -387,7 +409,10 @@ h2{
         곡 검색
       </strong>
 
-      <button class="btn" onclick="closeSearch()">
+      <button
+        class="btn"
+        onclick="closeSearch()"
+      >
         닫기
       </button>
 
@@ -402,7 +427,7 @@ h2{
     >
 
     <div class="hint">
-      Apple Music Store의 음원 검색 결과입니다.
+      Apple iTunes Store 음원 검색
     </div>
 
     <div id="results"></div>
@@ -473,10 +498,13 @@ let archive = [
 
 
 let activeWho = "나";
+
 let activeFilter = "전체";
 
 let searchTimer = null;
+
 let searchResults = [];
+
 let searchTimeout = null;
 
 
@@ -484,13 +512,17 @@ function esc(s=""){
 
   return String(s).replace(
     /[&<>"']/g,
-    m => ({
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#039;"
-    }[m])
+    function(m){
+
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[m];
+
+    }
   );
 
 }
@@ -498,11 +530,16 @@ function esc(s=""){
 
 function md(date){
 
-  const d = new Date(date + "T00:00:00");
+  const d =
+    new Date(
+      date + "T00:00:00"
+    );
 
   return (
-    (d.getMonth()+1) +
-    "/" +
+    (d.getMonth()+1)
+    +
+    "/"
+    +
     d.getDate()
   );
 
@@ -512,10 +549,14 @@ function md(date){
 function duration(start,end){
 
   const a =
-    new Date(start + "T00:00:00");
+    new Date(
+      start + "T00:00:00"
+    );
 
   const b =
-    new Date(end + "T00:00:00");
+    new Date(
+      end + "T00:00:00"
+    );
 
   return Math.max(
     1,
@@ -529,7 +570,8 @@ function duration(start,end){
 
 function todayISO(){
 
-  const d = new Date();
+  const d =
+    new Date();
 
   const year =
     d.getFullYear();
@@ -545,10 +587,14 @@ function todayISO(){
     ).padStart(2,"0");
 
   return (
-    year +
-    "-" +
-    month +
-    "-" +
+    year
+    +
+    "-"
+    +
+    month
+    +
+    "-"
+    +
     day
   );
 
@@ -558,55 +604,73 @@ function todayISO(){
 function renderCurrent(){
 
   const people = [
+
     ["나","mySongs"],
+
     ["친구","friendSongs"]
+
   ];
 
 
-  people.forEach(([who,id])=>{
+  people.forEach(
+    function(item){
 
-    const el =
-      document.getElementById(id);
+      const who =
+        item[0];
 
-    const songs =
-      current[who];
+      const id =
+        item[1];
+
+      const el =
+        document.getElementById(id);
+
+      const songs =
+        current[who];
 
 
-    if(!songs.length){
+      if(!songs.length){
+
+        el.innerHTML =
+          '<div class="empty">등록된 곡 없음</div>';
+
+        return;
+
+      }
+
 
       el.innerHTML =
-        '<div class="empty">등록된 곡 없음</div>';
+        songs.map(
+          function(song){
 
-      return;
-    }
+            return `
 
+              <div class="song-row">
 
-    el.innerHTML =
-      songs.map(song=>`
+                ${
+                  song.cover
+                  ?
+                  `<img
+                    class="cover"
+                    src="${esc(song.cover)}"
+                    alt=""
+                  >`
+                  :
+                  `<div class="cover"></div>`
+                }
 
-        <div class="song-row">
+                <div class="song-text">
+                  ${esc(song.artist)} - ${esc(song.title)}
+                </div>
 
-          ${
-            song.cover
-            ?
-            `<img
-              class="cover"
-              src="${esc(song.cover)}"
-              alt=""
-            >`
-            :
-            `<div class="cover"></div>`
+              </div>
+
+            `;
+
           }
+        ).join("");
 
-          <div class="song-text">
-            ${esc(song.artist)} - ${esc(song.title)}
-          </div>
-
-        </div>
-
-      `).join("");
-
-  });
+    }
+  );
 
 }
 
@@ -615,15 +679,22 @@ function renderArchive(){
 
   const data =
     archive.filter(
-      item =>
-        activeFilter === "전체"
-        ||
-        item.who === activeFilter
+      function(item){
+
+        return (
+          activeFilter === "전체"
+          ||
+          item.who === activeFilter
+        );
+
+      }
     );
 
 
   const el =
-    document.getElementById("archive");
+    document.getElementById(
+      "archive"
+    );
 
 
   if(!data.length){
@@ -632,47 +703,60 @@ function renderArchive(){
       '<div class="empty">보관된 곡이 없어요.</div>';
 
     return;
+
   }
 
 
   el.innerHTML =
-    data.map(item=>`
+    data.map(
+      function(item){
 
-      <div class="archive-row">
+        return `
 
-        <span class="who">
-          ${esc(item.who)}
-        </span>
+          <div class="archive-row">
 
-        <span class="archive-song">
-          ${esc(item.artist)} - ${esc(item.title)}
-        </span>
+            <span class="who">
+              ${esc(item.who)}
+            </span>
 
-        <span class="archive-date">
-          ${md(item.start)}~${md(item.end)}
-          (${duration(item.start,item.end)}일)
-        </span>
+            <span class="archive-song">
+              ${esc(item.artist)} - ${esc(item.title)}
+            </span>
 
-      </div>
+            <span class="archive-date">
+              ${md(item.start)}~${md(item.end)}
+              (${duration(item.start,item.end)}일)
+            </span>
 
-    `).join("");
+          </div>
+
+        `;
+
+      }
+    ).join("");
 
 }
 
 
 function setFilter(filter,button){
 
-  activeFilter = filter;
+  activeFilter =
+    filter;
 
 
   document
     .querySelectorAll(".filter")
-    .forEach(btn=>{
-      btn.classList.remove("on");
-    });
+    .forEach(
+      function(btn){
+
+        btn.classList.remove("on");
+
+      }
+    );
 
 
   button.classList.add("on");
+
 
   renderArchive();
 
@@ -681,7 +765,9 @@ function setFilter(filter,button){
 
 function openSearch(who){
 
-  activeWho = who;
+  activeWho =
+    who;
+
 
   document.getElementById(
     "sheetTitle"
@@ -691,7 +777,8 @@ function openSearch(who){
 
   document.getElementById(
     "searchInput"
-  ).value = "";
+  ).value =
+    "";
 
 
   document.getElementById(
@@ -705,13 +792,16 @@ function openSearch(who){
   ).classList.add("open");
 
 
-  setTimeout(()=>{
+  setTimeout(
+    function(){
 
-    document.getElementById(
-      "searchInput"
-    ).focus();
+      document.getElementById(
+        "searchInput"
+      ).focus();
 
-  },100);
+    },
+    100
+  );
 
 }
 
@@ -730,39 +820,48 @@ function overlayClose(event){
   if(
     event.target.id === "overlay"
   ){
+
     closeSearch();
+
   }
 
 }
 
 
-window.itunesCallback = function(data){
+window.itunesCallback =
+function(data){
 
-  clearTimeout(searchTimeout);
+  clearTimeout(
+    searchTimeout
+  );
 
 
   const raw =
-    data && data.results
-      ?
+    (
+      data
+      &&
       data.results
-      :
-      [];
+    )
+    ?
+    data.results
+    :
+    [];
 
 
   const songs =
-    raw.filter(item=>
+    raw.filter(
+      function(item){
 
-      item.kind === "song"
+        return (
+          item.kind === "song"
+          &&
+          item.artistName
+          &&
+          item.trackName
+        );
 
-      &&
-
-      item.artistName
-
-      &&
-
-      item.trackName
-
-  );
+      }
+    );
 
 
   const seen =
@@ -770,62 +869,74 @@ window.itunesCallback = function(data){
 
 
   searchResults =
-    songs.filter(item=>{
+    songs.filter(
+      function(item){
 
-      const key =
-        item.artistName.toLowerCase()
-        +
-        "|||"
-        +
-        item.trackName.toLowerCase();
+        const key =
+          item.artistName.toLowerCase()
+          +
+          "|||"
+          +
+          item.trackName.toLowerCase();
 
 
-      if(
-        seen.has(key)
-      ){
-        return false;
+        if(
+          seen.has(key)
+        ){
+
+          return false;
+
+        }
+
+
+        seen.add(key);
+
+        return true;
+
       }
+    ).map(
+      function(item){
 
+        return {
 
-      seen.add(key);
+          artist:
+            item.artistName,
 
-      return true;
+          title:
+            item.trackName,
 
-    }).map(item=>({
+          album:
+            item.collectionName || "",
 
-      artist:
-        item.artistName,
+          cover:
+            item.artworkUrl100
+            ?
+            item.artworkUrl100.replace(
+              "100x100bb",
+              "300x300bb"
+            )
+            :
+            ""
 
-      title:
-        item.trackName,
+        };
 
-      album:
-        item.collectionName || "",
-
-      cover:
-        item.artworkUrl100
-          ?
-          item.artworkUrl100.replace(
-            "100x100bb",
-            "300x300bb"
-          )
-          :
-          ""
-
-    }));
+      }
+    );
 
 
   renderResults();
 
 
-  const old =
+  const script =
     document.getElementById(
       "itunesScript"
     );
 
 
-  if(old){
-    old.remove();
+  if(script){
+
+    script.remove();
+
   }
 
 };
@@ -833,24 +944,23 @@ window.itunesCallback = function(data){
 
 function searchItunes(){
 
-  const input =
+  const query =
     document.getElementById(
       "searchInput"
-    );
-
-
-  const query =
-    input.value.trim();
+    ).value.trim();
 
 
   if(!query){
 
-    searchResults = [];
+    searchResults =
+      [];
+
 
     document.getElementById(
       "results"
     ).innerHTML =
       '<div class="empty">아티스트 또는 곡명을 입력하세요.</div>';
+
 
     return;
 
@@ -870,7 +980,9 @@ function searchItunes(){
 
 
   if(old){
+
     old.remove();
+
   }
 
 
@@ -902,7 +1014,7 @@ function searchItunes(){
     +
     "&entity=musicTrack"
     +
-    "&limit=200"
+    "&limit=100"
     +
     "&callback=itunesCallback"
     +
@@ -911,7 +1023,13 @@ function searchItunes(){
     Date.now();
 
 
-  script.onerror = function(){
+  script.onerror =
+  function(){
+
+    clearTimeout(
+      searchTimeout
+    );
+
 
     document.getElementById(
       "results"
@@ -922,26 +1040,29 @@ function searchItunes(){
 
 
   searchTimeout =
-    setTimeout(()=>{
+    setTimeout(
+      function(){
 
-      const result =
-        document.getElementById(
-          "results"
-        );
+        const result =
+          document.getElementById(
+            "results"
+          );
 
 
-      if(
-        result.textContent.includes(
-          "검색 중"
-        )
-      ){
+        if(
+          result.textContent.includes(
+            "검색 중"
+          )
+        ){
 
-        result.innerHTML =
-          '<div class="empty">API 응답이 없어요.</div>';
+          result.innerHTML =
+            '<div class="empty">API 응답이 없어요.</div>';
 
-      }
+        }
 
-    },7000);
+      },
+      7000
+    );
 
 
   document.body.appendChild(
@@ -961,7 +1082,7 @@ function scheduleSearch(){
   searchTimer =
     setTimeout(
       searchItunes,
-      500
+      450
     );
 
 }
@@ -989,40 +1110,45 @@ function renderResults(){
 
   el.innerHTML =
     searchResults.map(
-      (song,index)=>`
+      function(song,index){
 
-      <div
-        class="result"
-        onclick="selectSong(${index})"
-      >
+        return `
 
-        ${
-          song.cover
-          ?
-          `<img
-            class="cover"
-            src="${esc(song.cover)}"
-            alt=""
-          >`
-          :
-          `<div class="cover"></div>`
-        }
+          <div
+            class="result"
+            onclick="selectSong(${index})"
+          >
 
-        <div class="result-main">
+            ${
+              song.cover
+              ?
+              `<img
+                class="cover"
+                src="${esc(song.cover)}"
+                alt=""
+              >`
+              :
+              `<div class="cover"></div>`
+            }
 
-          <div class="result-title">
-            ${esc(song.artist)} - ${esc(song.title)}
+            <div class="result-main">
+
+              <div class="result-title">
+                ${esc(song.artist)} - ${esc(song.title)}
+              </div>
+
+              <div class="result-sub">
+                ${esc(song.album)}
+              </div>
+
+            </div>
+
           </div>
 
-          <div class="result-sub">
-            ${esc(song.album)}
-          </div>
+        `;
 
-        </div>
-
-      </div>
-
-    `).join("");
+      }
+    ).join("");
 
 }
 
@@ -1034,7 +1160,9 @@ function selectSong(index){
 
 
   if(!song){
+
     return;
+
   }
 
 
@@ -1043,14 +1171,16 @@ function selectSong(index){
 
 
   const duplicate =
-    list.some(item=>
+    list.some(
+      function(item){
 
-      item.artist === song.artist
+        return (
+          item.artist === song.artist
+          &&
+          item.title === song.title
+        );
 
-      &&
-
-      item.title === song.title
-
+      }
     );
 
 
@@ -1080,7 +1210,9 @@ function selectSong(index){
 
 
     if(!change){
+
       return;
+
     }
 
 
@@ -1144,1013 +1276,6 @@ document
     "input",
     scheduleSearch
   );
-
-
-renderCurrent();
-
-renderArchive();
-
-</script>
-
-</body>
-</html>}
-
-.result-main{
-  min-width:0;
-  flex:1;
-}
-
-.result-title{
-  font-size:12px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.result-sub{
-  margin-top:2px;
-  font-size:10px;
-  color:#888;
-}
-
-.hint{
-  font-size:10px;
-  color:#999;
-  margin:8px 1px;
-}
-
-@media(max-width:460px){
-  .wrap{
-    padding-left:10px;
-    padding-right:10px;
-  }
-
-  .card{
-    padding:12px;
-  }
-
-  .people{
-    gap:7px;
-  }
-
-  .person{
-    padding:8px;
-  }
-
-  .cover{
-    width:28px;
-    height:28px;
-  }
-
-  .song-text{
-    font-size:10.5px;
-  }
-
-  .archive-row{
-    gap:5px;
-    font-size:11px;
-  }
-
-  .archive-date{
-    font-size:10px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<div class="wrap">
-
-  <div class="head">
-    <div>
-      <h1>요즘 최애곡</h1>
-      <div class="sub">각자 최대 2곡</div>
-    </div>
-  </div>
-
-  <section class="card">
-
-    <div class="people">
-
-      <div class="person">
-
-        <div class="person-title">
-          <span>나</span>
-          <button class="btn ghost" onclick="openSearch('나')">
-            + 등록
-          </button>
-        </div>
-
-        <div id="mySongs"></div>
-
-      </div>
-
-      <div class="person">
-
-        <div class="person-title">
-          <span>친구</span>
-          <button class="btn ghost" onclick="openSearch('친구')">
-            + 등록
-          </button>
-        </div>
-
-        <div id="friendSongs"></div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <section class="card">
-
-    <div class="head">
-      <h2>보관함</h2>
-      <div class="sub">최신순</div>
-    </div>
-
-    <div class="filters">
-
-      <button class="filter on" onclick="setFilter('전체',this)">
-        전체
-      </button>
-
-      <button class="filter" onclick="setFilter('나',this)">
-        나
-      </button>
-
-      <button class="filter" onclick="setFilter('친구',this)">
-        친구
-      </button>
-
-    </div>
-
-    <div id="archive"></div>
-
-  </section>
-
-</div>
-
-
-<div
-  id="overlay"
-  class="overlay"
-  onclick="overlayClose(event)"
->
-
-  <div class="sheet">
-
-    <div class="sheet-top">
-
-      <strong id="sheetTitle">
-        곡 검색
-      </strong>
-
-      <button
-        class="btn ghost"
-        onclick="closeSearch()"
-      >
-        닫기
-      </button>
-
-    </div>
-
-    <input
-      id="searchInput"
-      class="search"
-      placeholder="아티스트 또는 곡명 검색"
-    >
-
-    <div class="hint">
-      음원 곡만 검색합니다.
-    </div>
-
-    <div id="results"></div>
-
-  </div>
-
-</div>
-
-
-<script>
-
-let current={
-
-  "나":[
-
-    {
-      artist:"DAY6",
-      title:"HAPPY",
-      cover:"https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/2a/02/f8/2a02f8f9-7813-8d70-97b8-d609dc4bc370/888272125223_Cover.jpg/100x100bb.jpg",
-      start:"2026-09-04"
-    },
-
-    {
-      artist:"DAY6",
-      title:"Welcome to the Show",
-      cover:"https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/fb/72/3d/fb723d0c-e15f-bf40-8e66-0e171d85af72/888272123533_Cover.jpg/100x100bb.jpg",
-      start:"2026-09-07"
-    }
-
-  ],
-
-  "친구":[
-
-    {
-      artist:"aespa",
-      title:"Whiplash",
-      cover:"https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/73/59/a0/7359a0c9-24e6-e896-2cff-fdb675348868/8804775451602.jpg/100x100bb.jpg",
-      start:"2026-09-03"
-    }
-
-  ]
-
-};
-
-
-let archive=[
-
-  {
-    who:"나",
-    artist:"DAY6",
-    title:"예뻤어",
-    start:"2026-08-29",
-    end:"2026-09-04"
-  },
-
-  {
-    who:"친구",
-    artist:"NCT WISH",
-    title:"Songbird",
-    start:"2026-08-27",
-    end:"2026-09-03"
-  },
-
-  {
-    who:"나",
-    artist:"IU",
-    title:"Love wins all",
-    start:"2026-08-20",
-    end:"2026-08-29"
-  }
-
-];
-
-
-let activeWho="나";
-
-let activeFilter="전체";
-
-let searchTimer=null;
-
-let searchResults=[];
-
-let itunesTimeout=null;
-
-
-function esc(s=""){
-
-  return String(s).replace(
-    /[&<>"']/g,
-    m=>({
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#039;"
-    }[m])
-  );
-
-}
-
-
-function norm(s=""){
-
-  return String(s)
-    .toLowerCase()
-    .normalize("NFKC")
-    .replace(/\s+/g," ")
-    .trim();
-
-}
-
-
-function md(d){
-
-  const x=new Date(d+"T00:00:00");
-
-  return `${x.getMonth()+1}/${x.getDate()}`;
-
-}
-
-
-function duration(start,end){
-
-  const a=new Date(start+"T00:00:00");
-
-  const b=new Date(end+"T00:00:00");
-
-  return Math.max(
-    1,
-    Math.round((b-a)/86400000)+1
-  );
-
-}
-
-
-function todayISO(){
-
-  const d=new Date();
-
-  const y=d.getFullYear();
-
-  const m=String(
-    d.getMonth()+1
-  ).padStart(2,"0");
-
-  const day=String(
-    d.getDate()
-  ).padStart(2,"0");
-
-  return `${y}-${m}-${day}`;
-
-}
-
-
-function renderCurrent(){
-
-  const areas=[
-    ["나","mySongs"],
-    ["친구","friendSongs"]
-  ];
-
-
-  areas.forEach(([who,id])=>{
-
-    const el=document.getElementById(id);
-
-    const songs=current[who];
-
-
-    el.innerHTML=songs.length
-      ?
-      songs.map(s=>`
-
-        <div
-          class="song-row"
-          title="${esc(s.artist)} - ${esc(s.title)}"
-        >
-
-          <img
-            class="cover"
-            src="${esc(s.cover)}"
-            alt=""
-          >
-
-          <div class="song-text">
-            ${esc(s.artist)} - ${esc(s.title)}
-          </div>
-
-        </div>
-
-      `).join("")
-      :
-      `<div class="empty">
-        등록된 곡 없음
-      </div>`;
-
-  });
-
-}
-
-
-function renderArchive(){
-
-  const data=archive.filter(
-    x=>
-      activeFilter==="전체"
-      ||
-      x.who===activeFilter
-  );
-
-
-  document.getElementById(
-    "archive"
-  ).innerHTML=
-
-    data.length
-      ?
-      data.map(x=>`
-
-        <div class="archive-row">
-
-          <span class="who">
-            ${x.who}
-          </span>
-
-          <span class="archive-song">
-            ${esc(x.artist)} - ${esc(x.title)}
-          </span>
-
-          <span class="archive-date">
-            ${md(x.start)}~${md(x.end)}
-            (${duration(x.start,x.end)}일)
-          </span>
-
-        </div>
-
-      `).join("")
-      :
-      `<div class="empty">
-        보관된 곡이 없어요.
-      </div>`;
-
-}
-
-
-function setFilter(v,el){
-
-  activeFilter=v;
-
-  document
-    .querySelectorAll(".filter")
-    .forEach(
-      x=>x.classList.remove("on")
-    );
-
-  el.classList.add("on");
-
-  renderArchive();
-
-}
-
-
-function openSearch(who){
-
-  activeWho=who;
-
-  document.getElementById(
-    "sheetTitle"
-  ).textContent=
-    `${who} · 곡 검색`;
-
-
-  document.getElementById(
-    "searchInput"
-  ).value="";
-
-
-  document.getElementById(
-    "overlay"
-  ).classList.add("open");
-
-
-  document.getElementById(
-    "results"
-  ).innerHTML=
-    `<div class="empty">
-      아티스트 또는 곡명을 입력하세요.
-    </div>`;
-
-
-  setTimeout(
-    ()=>
-      document.getElementById(
-        "searchInput"
-      ).focus(),
-    100
-  );
-
-}
-
-
-function closeSearch(){
-
-  document.getElementById(
-    "overlay"
-  ).classList.remove("open");
-
-}
-
-
-function overlayClose(e){
-
-  if(e.target.id==="overlay"){
-    closeSearch();
-  }
-
-}
-
-
-window.wsSearchCB=function(data){
-
-  clearTimeout(itunesTimeout);
-
-
-  try{
-
-    const q=norm(
-      document.getElementById(
-        "searchInput"
-      ).value
-    );
-
-
-    const raw=(
-      data &&
-      data.results
-        ?
-        data.results
-        :
-        []
-    )
-    .filter(
-      x=>
-        x.kind==="song"
-        &&
-        x.trackName
-        &&
-        x.artistName
-    );
-
-
-    const seen=new Set();
-
-
-    const unique=raw.filter(x=>{
-
-      const key=
-        norm(x.artistName)
-        +"|||"+
-        norm(x.trackName);
-
-
-      if(seen.has(key)){
-        return false;
-      }
-
-
-      seen.add(key);
-
-      return true;
-
-    });
-
-
-    function score(item){
-
-      const artist=
-        norm(item.artistName);
-
-      const title=
-        norm(item.trackName);
-
-
-      let s=0;
-
-
-      if(artist===q){
-        s+=1000;
-      }
-
-
-      if(title===q){
-        s+=950;
-      }
-
-
-      if(
-        artist.startsWith(q)
-      ){
-        s+=500;
-      }
-
-
-      if(
-        title.startsWith(q)
-      ){
-        s+=480;
-      }
-
-
-      if(
-        artist.includes(q)
-      ){
-        s+=300;
-      }
-
-
-      if(
-        title.includes(q)
-      ){
-        s+=280;
-      }
-
-
-      return s;
-
-    }
-
-
-    unique.sort(
-      (a,b)=>
-        score(b)-score(a)
-    );
-
-
-    searchResults=
-      unique
-      .slice(0,20)
-      .map(x=>({
-
-        artist:
-          x.artistName||"",
-
-        title:
-          x.trackName||"",
-
-        album:
-          x.collectionName||"",
-
-        cover:
-          (x.artworkUrl100||"")
-          .replace(
-            "100x100bb",
-            "300x300bb"
-          )
-
-      }));
-
-
-    renderResults();
-
-  }
-
-  catch(err){
-
-    console.error(err);
-
-
-    document.getElementById(
-      "results"
-    ).innerHTML=
-
-      `<div class="empty">
-        검색 결과 처리 중 오류가 났어요.
-      </div>`;
-
-  }
-
-
-  const s=
-    document.getElementById(
-      "itunesJsonpScript"
-    );
-
-
-  if(s){
-    s.remove();
-  }
-
-};
-
-
-function searchItunes(){
-
-  const q=
-    document.getElementById(
-      "searchInput"
-    ).value.trim();
-
-
-  if(!q){
-
-    clearTimeout(
-      itunesTimeout
-    );
-
-
-    searchResults=[];
-
-
-    document.getElementById(
-      "results"
-    ).innerHTML=
-
-      `<div class="empty">
-        아티스트 또는 곡명을 입력하세요.
-      </div>`;
-
-
-    return;
-
-  }
-
-
-  document.getElementById(
-    "results"
-  ).innerHTML=
-
-    `<div class="empty">
-      검색 중…
-    </div>`;
-
-
-  const old=
-    document.getElementById(
-      "itunesJsonpScript"
-    );
-
-
-  if(old){
-    old.remove();
-  }
-
-
-  clearTimeout(
-    itunesTimeout
-  );
-
-
-  const script=
-    document.createElement(
-      "script"
-    );
-
-
-  script.id=
-    "itunesJsonpScript";
-
-
-  const params=
-    new URLSearchParams({
-
-      term:q,
-
-      country:"KR",
-
-      media:"music",
-
-      entity:"musicTrack",
-
-      limit:"100",
-
-      callback:"wsSearchCB",
-
-      _:String(
-        Date.now()
-      )
-
-    });
-
-
-  script.src=
-    "https://itunes.apple.com/search?"
-    +
-    params.toString();
-
-
-  script.onerror=function(){
-
-    clearTimeout(
-      itunesTimeout
-    );
-
-
-    document.getElementById(
-      "results"
-    ).innerHTML=
-
-      `<div class="empty">
-        Apple 검색 API를 불러오지 못했어요.
-      </div>`;
-
-
-    script.remove();
-
-  };
-
-
-  itunesTimeout=
-    setTimeout(()=>{
-
-      const el=
-        document.getElementById(
-          "results"
-        );
-
-
-      if(
-        el &&
-        el.textContent.includes(
-          "검색 중"
-        )
-      ){
-
-        el.innerHTML=
-
-          `<div class="empty">
-            API 응답이 없어요.
-          </div>`;
-
-      }
-
-
-      const s=
-        document.getElementById(
-          "itunesJsonpScript"
-        );
-
-
-      if(s){
-        s.remove();
-      }
-
-    },7000);
-
-
-  document.body.appendChild(
-    script
-  );
-
-}
-
-
-function scheduleSearch(){
-
-  clearTimeout(
-    searchTimer
-  );
-
-
-  searchTimer=
-    setTimeout(
-      searchItunes,
-      450
-    );
-
-}
-
-
-function renderResults(){
-
-  const el=
-    document.getElementById(
-      "results"
-    );
-
-
-  if(
-    !searchResults.length
-  ){
-
-    el.innerHTML=
-
-      `<div class="empty">
-        검색 결과 없음
-      </div>`;
-
-
-    return;
-
-  }
-
-
-  el.innerHTML=
-    searchResults.map(
-      (s,i)=>`
-
-      <div
-        class="result"
-        onclick="selectSong(${i})"
-      >
-
-        <img
-          class="cover"
-          src="${esc(s.cover)}"
-          alt=""
-        >
-
-        <div class="result-main">
-
-          <div class="result-title">
-            ${esc(s.artist)} - ${esc(s.title)}
-          </div>
-
-          <div class="result-sub">
-            ${esc(s.album)}
-          </div>
-
-        </div>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-function selectSong(idx){
-
-  const song=
-    searchResults[idx];
-
-
-  if(!song){
-    return;
-  }
-
-
-  const list=
-    current[activeWho];
-
-
-  const duplicate=
-    list.some(
-      x=>
-        x.artist===song.artist
-        &&
-        x.title===song.title
-    );
-
-
-  if(duplicate){
-
-    alert(
-      "이미 현재 최애곡에 등록된 곡이에요."
-    );
-
-    return;
-
-  }
-
-
-  if(list.length>=2){
-
-    if(
-      !confirm(
-        `${activeWho}의 최애곡이 이미 2곡입니다.\n가장 오래된 곡을 보관함으로 옮기고 교체할까요?`
-      )
-    ){
-      return;
-    }
-
-
-    const old=
-      list.shift();
-
-
-    archive.unshift({
-
-      who:activeWho,
-
-      artist:old.artist,
-
-      title:old.title,
-
-      start:old.start,
-
-      end:todayISO()
-
-    });
-
-  }
-
-
-  list.push({
-
-    artist:song.artist,
-
-    title:song.title,
-
-    cover:song.cover,
-
-    start:todayISO()
-
-  });
-
-
-  renderCurrent();
-
-  renderArchive();
-
-  closeSearch();
-
-}
-
-
-const searchInput=
-  document.getElementById(
-    "searchInput"
-  );
-
-
-searchInput.addEventListener(
-  "input",
-  scheduleSearch
-);
 
 
 renderCurrent();
