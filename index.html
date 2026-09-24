@@ -50,14 +50,18 @@ h1{
 }
 
 
-/* 곡 목록 */
+/* =========================
+   PLAYLIST
+========================= */
 
 .song{
   display:flex;
   align-items:center;
   gap:8px;
-  height:52px;
+
   min-width:0;
+  height:52px;
+
   border-top:1px solid #f0f0f1;
 }
 
@@ -69,7 +73,18 @@ h1{
   width:38px;
   height:38px;
   flex:0 0 38px;
+
   object-fit:cover;
+
+  border-radius:6px;
+  background:#eee;
+}
+
+.cover-placeholder{
+  width:38px;
+  height:38px;
+  flex:0 0 38px;
+
   border-radius:6px;
   background:#eee;
 }
@@ -83,13 +98,16 @@ h1{
   overflow:hidden;
   white-space:nowrap;
   text-overflow:ellipsis;
+
   font-size:12px;
 }
 
 .duration{
   flex:0 0 auto;
+
   color:#929292;
   font-size:10px;
+
   font-variant-numeric:tabular-nums;
 }
 
@@ -111,6 +129,7 @@ h1{
   color:#fff;
 
   font-size:10px;
+
   cursor:pointer;
 }
 
@@ -118,8 +137,14 @@ h1{
   padding:0;
 }
 
+.play:disabled{
+  background:#ccc;
+  cursor:default;
+}
+
 .add{
   width:100%;
+
   margin-top:9px;
   padding:9px;
 
@@ -130,18 +155,24 @@ h1{
   color:#333;
 
   font-size:11px;
+
   cursor:pointer;
 }
 
 .empty{
   padding:20px 0;
+
   color:#999;
+
   text-align:center;
+
   font-size:11px;
 }
 
 
-/* 검색창 */
+/* =========================
+   SHEET
+========================= */
 
 .overlay{
   position:fixed;
@@ -168,6 +199,7 @@ h1{
   padding:14px;
 
   background:#fff;
+
   border-radius:18px 18px 0 0;
 }
 
@@ -175,6 +207,7 @@ h1{
   display:flex;
   align-items:center;
   justify-content:space-between;
+
   margin-bottom:10px;
 }
 
@@ -193,17 +226,20 @@ h1{
   color:#333;
 
   font-size:11px;
+
   cursor:pointer;
 }
 
 .search{
   width:100%;
+
   padding:10px 11px;
 
   border:1px solid #ddd;
   border-radius:10px;
 
   outline:none;
+
   font-size:13px;
 }
 
@@ -213,22 +249,26 @@ h1{
 
 .hint{
   margin:7px 1px 9px;
+
   color:#999;
+
   font-size:10px;
 }
 
 
-/* 검색 결과 */
+/* =========================
+   SEARCH RESULTS
+========================= */
 
 .result{
   display:flex;
   align-items:center;
 
-  gap:8px;
+  gap:9px;
 
   min-width:0;
 
-  padding:7px 0;
+  padding:8px 0;
 
   border-top:1px solid #f0f0f1;
 
@@ -239,15 +279,26 @@ h1{
   border-top:0;
 }
 
-.result-cover{
-  width:42px;
-  height:42px;
-  flex:0 0 42px;
+.result:hover{
+  background:#fafafa;
+}
 
-  object-fit:cover;
+.result-icon{
+  width:40px;
+  height:40px;
+  flex:0 0 40px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
   border-radius:6px;
-  background:#eee;
+
+  background:#f0f0f2;
+
+  color:#aaa;
+
+  font-size:14px;
 }
 
 .result-info{
@@ -271,6 +322,7 @@ h1{
   text-overflow:ellipsis;
 
   color:#999;
+
   font-size:10px;
 }
 
@@ -278,9 +330,14 @@ h1{
   flex:0 0 auto;
 
   color:#999;
+
   font-size:10px;
 }
 
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:460px){
 
@@ -297,7 +354,8 @@ h1{
     gap:7px;
   }
 
-  .cover{
+  .cover,
+  .cover-placeholder{
     width:35px;
     height:35px;
     flex-basis:35px;
@@ -305,6 +363,10 @@ h1{
 
   .song-title{
     font-size:11px;
+  }
+
+  .duration{
+    font-size:10px;
   }
 
   .play{
@@ -319,9 +381,10 @@ h1{
 
 <body>
 
+
 <div class="wrap">
 
-  <div class="card">
+  <section class="card">
 
     <div class="head">
 
@@ -350,13 +413,11 @@ h1{
       + 곡 추가
     </button>
 
-  </div>
+  </section>
 
 </div>
 
 
-
-<!-- 검색 -->
 
 <div
   class="overlay"
@@ -393,7 +454,7 @@ h1{
 
 
     <div class="hint">
-      검색 결과를 누르면 바로 추가됩니다.
+      검색 결과를 누르면 플레이리스트에 추가됩니다.
     </div>
 
 
@@ -413,7 +474,7 @@ h1{
 <script>
 
 /* =========================
-   데이터
+   DATA
 ========================= */
 
 let songs = [];
@@ -422,15 +483,19 @@ let searchResults = [];
 
 let searchTimer = null;
 
+let searchController = null;
+
 let itunesTimeout = null;
 
 let currentAudio = null;
 
 let currentButton = null;
 
+let pendingSong = null;
+
 
 /* =========================
-   HTML escape
+   UTILS
 ========================= */
 
 function esc(value=""){
@@ -453,10 +518,6 @@ function esc(value=""){
 }
 
 
-/* =========================
-   시간
-========================= */
-
 function formatTime(ms){
 
   if(!ms){
@@ -478,8 +539,20 @@ function formatTime(ms){
 }
 
 
+function normalize(value){
+
+  return String(value || "")
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/\([^)]*\)/g,"")
+    .replace(/\[[^\]]*\]/g,"")
+    .replace(/[^a-z0-9가-힣]/g,"");
+
+}
+
+
 /* =========================
-   곡 목록
+   PLAYLIST
 ========================= */
 
 function renderSongs(){
@@ -506,15 +579,27 @@ function renderSongs(){
   list.innerHTML =
     songs.map(function(song,index){
 
-      return `
+      const coverHTML =
+        song.cover
 
-        <div class="song">
-
+        ? `
           <img
             class="cover"
             src="${esc(song.cover)}"
             alt=""
           >
+        `
+
+        : `
+          <div class="cover-placeholder"></div>
+        `;
+
+
+      return `
+
+        <div class="song">
+
+          ${coverHTML}
 
           <div class="song-info">
 
@@ -524,14 +609,17 @@ function renderSongs(){
 
           </div>
 
+
           <span class="duration">
-            ${esc(song.duration)}
+            ${esc(song.duration || "")}
           </span>
+
 
           <button
             class="play"
             type="button"
             onclick="playSong(${index},this)"
+            ${song.preview ? "" : "disabled"}
             aria-label="재생"
           >
             ▶
@@ -547,7 +635,7 @@ function renderSongs(){
 
 
 /* =========================
-   재생
+   PLAYER
 ========================= */
 
 function stopCurrent(){
@@ -555,6 +643,7 @@ function stopCurrent(){
   if(currentAudio){
 
     currentAudio.pause();
+
     currentAudio = null;
 
   }
@@ -562,7 +651,8 @@ function stopCurrent(){
 
   if(currentButton){
 
-    currentButton.textContent = "▶";
+    currentButton.textContent =
+      "▶";
 
     currentButton.classList.remove(
       "playing"
@@ -582,11 +672,7 @@ function playSong(index,button){
 
 
   if(!song.preview){
-
-    alert("이 곡은 미리듣기를 제공하지 않아요.");
-
     return;
-
   }
 
 
@@ -599,7 +685,8 @@ function playSong(index,button){
 
       currentAudio.play();
 
-      button.textContent = "Ⅱ";
+      button.textContent =
+        "Ⅱ";
 
       button.classList.add(
         "playing"
@@ -609,7 +696,8 @@ function playSong(index,button){
 
       currentAudio.pause();
 
-      button.textContent = "▶";
+      button.textContent =
+        "▶";
 
       button.classList.remove(
         "playing"
@@ -636,7 +724,8 @@ function playSong(index,button){
   currentAudio.play()
     .then(function(){
 
-      button.textContent = "Ⅱ";
+      button.textContent =
+        "Ⅱ";
 
       button.classList.add(
         "playing"
@@ -646,8 +735,6 @@ function playSong(index,button){
     .catch(function(){
 
       stopCurrent();
-
-      alert("미리듣기를 재생하지 못했어요.");
 
     });
 
@@ -661,7 +748,7 @@ function playSong(index,button){
 
 
 /* =========================
-   검색창 열기/닫기
+   OPEN / CLOSE
 ========================= */
 
 function openSearch(){
@@ -713,128 +800,19 @@ function overlayClick(event){
 }
 
 
-/* ======================================
-   실제 작동 확인했던 iTunes JSONP 방식
-====================================== */
-
-window.wsSearchCB = function(data){
-
-  clearTimeout(itunesTimeout);
-
-
-  try{
-
-    searchResults =
-      (
-        data &&
-        Array.isArray(data.results)
-        ?
-        data.results
-        :
-        []
-      )
-
-      .filter(function(item){
-
-        return (
-          item.wrapperType === "track" ||
-          item.kind === "song"
-        );
-
-      })
-
-      .filter(function(item){
-
-        return (
-          item.artistName &&
-          item.trackName
-        );
-
-      })
-
-      .map(function(item){
-
-        return {
-
-          id:
-            item.trackId || "",
-
-          artist:
-            item.artistName || "",
-
-          title:
-            item.trackName || "",
-
-          album:
-            item.collectionName || "",
-
-          cover:
-            (
-              item.artworkUrl100 || ""
-            )
-            .replace(
-              "100x100bb",
-              "300x300bb"
-            ),
-
-          duration:
-            formatTime(
-              item.trackTimeMillis
-            ),
-
-          preview:
-            item.previewUrl || "",
-
-          trackViewUrl:
-            item.trackViewUrl || ""
-
-        };
-
-      });
-
-
-    renderResults();
-
-  }
-  catch(error){
-
-    console.error(error);
-
-    document.getElementById("results")
-      .innerHTML =
-      '<div class="empty">검색 결과를 불러오지 못했어요.</div>';
-
-  }
-
-
-  const script =
-    document.getElementById(
-      "itunesJsonpScript"
-    );
-
-
-  if(script){
-
-    script.remove();
-
-  }
-
-};
-
-
 /* =========================
-   검색 실행
+   MUSICBRAINZ SEARCH
 ========================= */
 
-function searchItunes(){
+async function searchMusicBrainz(){
 
-  const q =
+  const query =
     document.getElementById("searchInput")
       .value
       .trim();
 
 
-  if(!q){
+  if(!query){
 
     searchResults = [];
 
@@ -847,126 +825,183 @@ function searchItunes(){
   }
 
 
+  if(searchController){
+
+    searchController.abort();
+
+  }
+
+
+  searchController =
+    new AbortController();
+
+
   document.getElementById("results")
     .innerHTML =
     '<div class="empty">검색 중...</div>';
 
 
-  const oldScript =
-    document.getElementById(
-      "itunesJsonpScript"
-    );
+  try{
+
+    const url =
+      "https://musicbrainz.org/ws/2/recording/?" +
+      new URLSearchParams({
+
+        query:query,
+
+        fmt:"json",
+
+        limit:"50"
+
+      }).toString();
 
 
-  if(oldScript){
+    const response =
+      await fetch(
+        url,
+        {
+          signal:
+            searchController.signal,
 
-    oldScript.remove();
+          headers:{
+            "Accept":
+              "application/json"
+          }
+        }
+      );
+
+
+    if(!response.ok){
+
+      throw new Error(
+        "MusicBrainz HTTP "
+        +
+        response.status
+      );
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    searchResults =
+      (
+        data.recordings || []
+      )
+
+      .map(function(item){
+
+        const credits =
+          item["artist-credit"] || [];
+
+
+        const artist =
+          credits
+            .map(function(credit){
+
+              return credit.name || "";
+
+            })
+            .filter(Boolean)
+            .join(", ");
+
+
+        let album = "";
+
+
+        if(
+          item.releases &&
+          item.releases.length
+        ){
+
+          album =
+            item.releases[0].title || "";
+
+        }
+
+
+        return {
+
+          mbid:
+            item.id || "",
+
+          artist:
+            artist,
+
+          title:
+            item.title || "",
+
+          album:
+            album,
+
+          duration:
+            item.length
+              ? formatTime(item.length)
+              : ""
+
+        };
+
+      })
+
+      .filter(function(item){
+
+        return (
+          item.artist &&
+          item.title
+        );
+
+      });
+
+
+    renderResults();
 
   }
+  catch(error){
+
+    if(
+      error.name ===
+      "AbortError"
+    ){
+      return;
+    }
 
 
-  clearTimeout(itunesTimeout);
-
-
-  const params =
-    new URLSearchParams({
-
-      term:q,
-
-      country:"KR",
-
-      media:"music",
-
-      entity:"musicTrack",
-
-      limit:"20",
-
-      callback:"wsSearchCB",
-
-      _:String(Date.now())
-
-    });
-
-
-  const script =
-    document.createElement("script");
-
-
-  script.id =
-    "itunesJsonpScript";
-
-
-  script.src =
-    "https://itunes.apple.com/search?"
-    +
-    params.toString();
-
-
-  script.onerror = function(){
-
-    clearTimeout(itunesTimeout);
+    console.error(error);
 
 
     document.getElementById("results")
       .innerHTML =
       '<div class="empty">검색에 실패했어요.</div>';
 
-
-    script.remove();
-
-  };
-
-
-  document.body.appendChild(
-    script
-  );
-
-
-  itunesTimeout =
-    setTimeout(function(){
-
-      const result =
-        document.getElementById(
-          "results"
-        );
-
-
-      if(
-        result.textContent.includes(
-          "검색 중"
-        )
-      ){
-
-        result.innerHTML =
-          '<div class="empty">검색 응답이 없어요.</div>';
-
-      }
-
-    },8000);
+  }
 
 }
 
 
 /* =========================
-   입력 디바운스
+   SEARCH DELAY
 ========================= */
 
 function scheduleSearch(){
 
-  clearTimeout(searchTimer);
+  clearTimeout(
+    searchTimer
+  );
 
 
   searchTimer =
     setTimeout(
-      searchItunes,
-      450
+      searchMusicBrainz,
+      550
     );
 
 }
 
 
 /* =========================
-   검색 결과 표시
+   RESULTS
 ========================= */
 
 function renderResults(){
@@ -986,51 +1021,56 @@ function renderResults(){
 
 
   box.innerHTML =
-    searchResults.map(function(song,index){
+    searchResults.map(
+      function(song,index){
 
-      return `
+        return `
 
-        <div
-          class="result"
-          onclick="addSong(${index})"
-        >
-
-          <img
-            class="result-cover"
-            src="${esc(song.cover)}"
-            alt=""
+          <div
+            class="result"
+            onclick="selectResult(${index})"
           >
 
-          <div class="result-info">
-
-            <div class="result-title">
-              ${esc(song.artist)} - ${esc(song.title)}
+            <div class="result-icon">
+              ♪
             </div>
 
-            <div class="result-album">
-              ${esc(song.album)}
+
+            <div class="result-info">
+
+              <div class="result-title">
+                ${esc(song.artist)}
+                -
+                ${esc(song.title)}
+              </div>
+
+
+              <div class="result-album">
+                ${esc(song.album)}
+              </div>
+
             </div>
+
+
+            <span class="result-time">
+              ${esc(song.duration)}
+            </span>
 
           </div>
 
-          <span class="result-time">
-            ${esc(song.duration)}
-          </span>
+        `;
 
-        </div>
-
-      `;
-
-    }).join("");
+      }
+    ).join("");
 
 }
 
 
 /* =========================
-   곡 추가
+   SELECT MUSICBRAINZ SONG
 ========================= */
 
-function addSong(index){
+function selectResult(index){
 
   const song =
     searchResults[index];
@@ -1041,56 +1081,427 @@ function addSong(index){
   }
 
 
-  const exists =
-    songs.some(function(saved){
+  const duplicate =
+    songs.some(
+      function(saved){
 
-      if(
-        song.id &&
-        saved.id &&
-        String(saved.id) === String(song.id)
-      ){
-
-        return true;
+        return (
+          saved.mbid &&
+          saved.mbid === song.mbid
+        );
 
       }
+    );
 
 
-      return (
-        saved.artist === song.artist &&
-        saved.title === song.title
-      );
+  if(duplicate){
 
-    });
-
-
-  if(exists){
-
-    alert("이미 추가된 곡이에요.");
+    alert(
+      "이미 추가된 곡이에요."
+    );
 
     return;
 
   }
 
 
-  songs.push({
+  pendingSong = {
 
-    id:song.id,
+    mbid:
+      song.mbid,
 
-    artist:song.artist,
+    artist:
+      song.artist,
 
-    title:song.title,
+    title:
+      song.title,
 
-    album:song.album,
+    album:
+      song.album,
 
-    cover:song.cover,
+    duration:
+      song.duration,
 
-    duration:song.duration,
+    cover:
+      "",
 
-    preview:song.preview,
+    preview:
+      ""
 
-    trackViewUrl:song.trackViewUrl
+  };
 
-  });
+
+  document.getElementById("results")
+    .innerHTML =
+    '<div class="empty">앨범 정보를 불러오는 중...</div>';
+
+
+  searchItunesForSelected(
+    pendingSong
+  );
+
+}
+
+
+/* =========================
+   ITUNES MATCH
+========================= */
+
+function searchItunesForSelected(song){
+
+  const oldScript =
+    document.getElementById(
+      "itunesJsonpScript"
+    );
+
+
+  if(oldScript){
+
+    oldScript.remove();
+
+  }
+
+
+  clearTimeout(
+    itunesTimeout
+  );
+
+
+  const script =
+    document.createElement(
+      "script"
+    );
+
+
+  script.id =
+    "itunesJsonpScript";
+
+
+  const params =
+    new URLSearchParams({
+
+      term:
+        song.artist
+        +
+        " "
+        +
+        song.title,
+
+      country:
+        "KR",
+
+      media:
+        "music",
+
+      entity:
+        "musicTrack",
+
+      limit:
+        "50",
+
+      callback:
+        "itunesMatchCallback",
+
+      _:
+        String(Date.now())
+
+    });
+
+
+  script.src =
+    "https://itunes.apple.com/search?"
+    +
+    params.toString();
+
+
+  script.onerror =
+    function(){
+
+      finishWithoutItunes();
+
+      script.remove();
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+
+  itunesTimeout =
+    setTimeout(
+      finishWithoutItunes,
+      8000
+    );
+
+}
+
+
+/* =========================
+   ITUNES CALLBACK
+========================= */
+
+window.itunesMatchCallback =
+function(data){
+
+  clearTimeout(
+    itunesTimeout
+  );
+
+
+  const results =
+    (
+      data &&
+      data.results
+    )
+    ?
+    data.results.filter(
+      function(item){
+
+        return (
+          item.artistName &&
+          item.trackName
+        );
+
+      }
+    )
+    :
+    [];
+
+
+  let best = null;
+
+  let bestScore = -1;
+
+
+  const targetArtist =
+    normalize(
+      pendingSong.artist
+    );
+
+
+  const targetTitle =
+    normalize(
+      pendingSong.title
+    );
+
+
+  results.forEach(
+    function(item){
+
+      const artist =
+        normalize(
+          item.artistName
+        );
+
+
+      const title =
+        normalize(
+          item.trackName
+        );
+
+
+      let score = 0;
+
+
+      if(
+        title ===
+        targetTitle
+      ){
+
+        score += 10;
+
+      }
+      else if(
+        title.includes(
+          targetTitle
+        )
+        ||
+        targetTitle.includes(
+          title
+        )
+      ){
+
+        score += 5;
+
+      }
+
+
+      if(
+        artist ===
+        targetArtist
+      ){
+
+        score += 10;
+
+      }
+      else if(
+        artist.includes(
+          targetArtist
+        )
+        ||
+        targetArtist.includes(
+          artist
+        )
+      ){
+
+        score += 4;
+
+      }
+
+
+      if(
+        pendingSong.album &&
+        item.collectionName
+      ){
+
+        const a =
+          normalize(
+            pendingSong.album
+          );
+
+
+        const b =
+          normalize(
+            item.collectionName
+          );
+
+
+        if(a === b){
+
+          score += 3;
+
+        }
+
+      }
+
+
+      if(score > bestScore){
+
+        bestScore =
+          score;
+
+        best =
+          item;
+
+      }
+
+    }
+  );
+
+
+  /*
+    엉뚱한 곡을 억지로 붙이지 않기 위해
+    최소 점수 이상일 때만 사용
+  */
+
+  if(
+    best &&
+    bestScore >= 10
+  ){
+
+    pendingSong.cover =
+      (
+        best.artworkUrl100 || ""
+      )
+      .replace(
+        "100x100bb",
+        "300x300bb"
+      );
+
+
+    pendingSong.preview =
+      best.previewUrl || "";
+
+
+    if(
+      best.trackTimeMillis
+    ){
+
+      pendingSong.duration =
+        formatTime(
+          best.trackTimeMillis
+        );
+
+    }
+
+
+    if(best.collectionName){
+
+      pendingSong.album =
+        best.collectionName;
+
+    }
+
+  }
+
+
+  finishAdd();
+
+
+  const script =
+    document.getElementById(
+      "itunesJsonpScript"
+    );
+
+
+  if(script){
+
+    script.remove();
+
+  }
+
+};
+
+
+/* =========================
+   FALLBACK
+========================= */
+
+function finishWithoutItunes(){
+
+  clearTimeout(
+    itunesTimeout
+  );
+
+
+  finishAdd();
+
+
+  const script =
+    document.getElementById(
+      "itunesJsonpScript"
+    );
+
+
+  if(script){
+
+    script.remove();
+
+  }
+
+}
+
+
+/* =========================
+   FINISH ADD
+========================= */
+
+function finishAdd(){
+
+  if(!pendingSong){
+    return;
+  }
+
+
+  songs.push(
+    pendingSong
+  );
+
+
+  pendingSong =
+    null;
 
 
   renderSongs();
@@ -1101,7 +1512,7 @@ function addSong(index){
 
 
 /* =========================
-   검색 입력 이벤트
+   EVENT
 ========================= */
 
 document
